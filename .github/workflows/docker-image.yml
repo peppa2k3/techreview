@@ -1,0 +1,35 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "develop" ]
+
+jobs:
+
+  build-and-deploy:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Login Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{secrets.DOCKER_USERNAME}}
+        password: ${{secrets.DOCKER_PASSWORD}}
+      
+    - name: Build the Docker image
+      run: |
+        docker build -t peppa2k3/techreview:1.0
+        docker push peppa2k3/techreview:1.0
+    - name: Deploy to VPS
+      uses: appleboy/ssh-action@v1
+      with:
+        host: ${{secrets.VPS_HOST}}
+        username: ${{secrets.VPS_USER}}
+        key: ${{secrets.VPS_KEY}}
+        script: |
+          cd /opt/techreview
+          docker compose pull
+          docker compose up -d
+          docker image prune -f
