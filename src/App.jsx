@@ -1,19 +1,21 @@
-import { useState } from "react";
-import "./App.css";
+import { useEffect, useState } from "react";
 import Header from "./Component/Header";
 import Body from "./Component/Body";
 import Footer from "./Component/Footer";
+
+// Main App
 function App() {
   const [typeProduct, setTypeProduct] = useState("key");
   const owr = {
-    nameWebsite: "nghienphimco",
-    name: "nghienphimco",
-    youtube: "ngienphimco",
-    face: "ngienphimco",
-    twitter: "ngienphimco",
+    nameWebsite: "Techreview",
+    name: "Techreview",
+    youtube: "Techreview",
+    face: "Techreview",
+    twitter: "Techreview",
   };
+
   return (
-    <div>
+    <div className="min-h-screen bg-slate-950">
       <Header setTypeProduct={setTypeProduct} />
       <Body typeProduct={typeProduct} />
       <Footer owr={owr} />
