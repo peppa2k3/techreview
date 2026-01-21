@@ -19,10 +19,10 @@ jobs:
 
       - name: Build & Push
         run: |
-          docker build -t peppa2k3/techreview:${{ github.sha }} .
-          docker tag peppa2k3/techreview:${{ github.sha }} peppa2k3/techreview:latest
-          docker push peppa2k3/techreview:${{ github.sha }}
-          docker push peppa2k3/techreview:latest
+          docker build -t peppa2k3/techreview:1.0 .
+          docker tag peppa2k3/techreview:1.0 peppa2k3/techreview:1.0
+          docker push peppa2k3/techreview:1.0
+          docker push peppa2k3/techreview:1.0
 
       - name: Deploy to VPS
         uses: appleboy/ssh-action@v1
@@ -32,5 +32,6 @@ jobs:
           key: ${{ secrets.VPS_KEY }}
           script: |
             cd /opt/techreview
+            docker compose down
             docker compose pull
             docker compose up -d
