@@ -16,13 +16,13 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-
+      - name: Set version
+        run: |
+          echo "VERSION=dev-${GITHUB_SHA::7}" >> $GITHUB_ENV
       - name: Build & Push
         run: |
-          docker build -t peppa2k3/techreview:${{ github.sha }} .
-          docker tag peppa2k3/techreview:${{ github.sha }} peppa2k3/techreview:latest
-          docker push peppa2k3/techreview:${{ github.sha }}
-          docker push peppa2k3/techreview:latest
+          docker build -t peppa2k3/techreview:${{ env.VERSION }} .
+          docker push peppa2k3/techreview:${{ env.VERSION }}
 
       - name: Deploy to VPS
         uses: appleboy/ssh-action@v1
@@ -32,5 +32,7 @@ jobs:
           key: ${{ secrets.VPS_KEY }}
           script: |
             cd /opt/techreview
+            docker compose down
+            echo "IMAGE_TAG=${{ env.VERSION }}" > .env
             docker compose pull
             docker compose up -d
