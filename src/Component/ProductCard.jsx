@@ -56,6 +56,11 @@ function ProductCard({ product, index }) {
           <div className="absolute inset-0 bg-gradient-to-r from-blue-500/0 via-blue-400/50 to-blue-500/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
           <button className="relative w-full bg-gradient-to-r from-blue-500 to-blue-600 text-white font-bold py-4 text-lg hover:from-blue-600 hover:to-blue-700 transition-all">
             {product?.price || "Liên hệ"}
+            <span className="price-text">
+              {product?.sale && (
+                <span className="sale-badge"> ( 🔥 Bán chạy)</span>
+              )}
+            </span>
           </button>
         </div>
       </div>
