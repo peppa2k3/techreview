@@ -18,6 +18,6 @@ const readFile = (path, setData) => {
 
 export default function CsvReader({ typeProduct, filePath, data, setData }) {
   useEffect(() => {
-    readFile(filePath, setData); // Gọi hàm đọc file CSV khi component mount
+    readFile(filePath, setData);
   }, [filePath]); // Chạy khi filePath thay đổi
 }
